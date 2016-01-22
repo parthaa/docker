@@ -203,5 +203,17 @@ func runInfo(dockerCli *client.DockerCli) error {
 			fmt.Fprintf(dockerCli.Out(), " %s/%d\n", registry.IP.String(), mask)
 		}
 	}
+	fmt.Fprintf(dockerCli.Out(), "Registries: ")
+	regs := []string{}
+	for _, r := range info.Registries {
+		s := "secure"
+		if !r.Secure {
+			s = "insecure"
+		}
+		regs = append(regs, fmt.Sprintf("%s (%s)", r.Name, s))
+	}
+	fmt.Fprintf(dockerCli.Out(), "%s", strings.Join(regs, ", "))
+	fmt.Fprintf(dockerCli.Out(), "\n")
+
 	return nil
 }

@@ -8,6 +8,7 @@ import (
 
 	"github.com/docker/docker/api/client"
 	"github.com/docker/docker/cli"
+	"github.com/docker/docker/daemon/dockerhooks"
 	"github.com/docker/docker/pkg/ioutils"
 	"github.com/docker/docker/utils"
 	"github.com/docker/engine-api/types/swarm"
@@ -108,6 +109,7 @@ func runInfo(dockerCli *client.DockerCli) error {
 	ioutils.FprintfIfNotEmpty(dockerCli.Out(), "Operating System: %s\n", info.OperatingSystem)
 	ioutils.FprintfIfNotEmpty(dockerCli.Out(), "OSType: %s\n", info.OSType)
 	ioutils.FprintfIfNotEmpty(dockerCli.Out(), "Architecture: %s\n", info.Architecture)
+	fmt.Fprintf(dockerCli.Out(), "Number of Docker Hooks: %d\n", dockerhooks.TotalHooks())
 	fmt.Fprintf(dockerCli.Out(), "CPUs: %d\n", info.NCPU)
 	fmt.Fprintf(dockerCli.Out(), "Total Memory: %s\n", units.BytesSize(float64(info.MemTotal)))
 	ioutils.FprintfIfNotEmpty(dockerCli.Out(), "Name: %s\n", info.Name)
